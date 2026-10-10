@@ -18,6 +18,7 @@ htmlcov/
 test.db
 .DS_Store
 .terraform/
+.codex-finalizer/
 *.tfstate
 *.tfstate.*
 *.tfplan
