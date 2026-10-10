@@ -1,6 +1,6 @@
 # DeployFlow submission checklist
 
-Status on 16 October 2026. Items marked **verified** were executed on this machine. Cloud-only items remain pending because usable AWS credentials and a destination GitHub repository were not supplied.
+Status on 16 October 2026. Items marked **verified** were executed on this machine. Only GitHub publishing remains pending because no destination repository was supplied.
 
 ## Application and testing
 
@@ -32,9 +32,11 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] `terraform.tfvars.example` contains no credentials.
 - [x] **Verified:** `terraform init` completes.
 - [x] **Verified:** `terraform validate` reports a valid configuration.
-- [ ] Run `terraform plan` with valid AWS credentials and capture the non-empty plan.
-- [ ] Apply the plan, capture the VPC and EKS console pages, then deploy the Helm release.
-- [ ] Run and capture `terraform destroy` after evaluation to avoid ongoing charges.
+- [x] **Verified:** Terraform produced a non-empty plan: 56 resources to add.
+- [x] **Verified:** Terraform applied the two-AZ VPC and active EKS 1.36 cluster in `ap-south-1`.
+- [x] **Verified:** two managed workers became Ready and the Helm release ran with two frontend and two backend replicas.
+- [x] AWS Console, EKS command output, ELB, and live application screenshots captured.
+- [x] **Verified:** Helm releases, load balancer, ECR repositories, and all Terraform-managed resources were destroyed after evidence capture.
 
 ## Kubernetes, Helm, and observability
 
@@ -54,4 +56,5 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] Root README explains the original application and full delivery path.
 - [x] Presentation notes include a timed demonstration sequence.
 - [x] Final slide deck includes genuine screenshots from this run.
-- [ ] Insert GitHub Actions, GHCR, AWS Console, Terraform plan, and Terraform destroy screenshots after those external steps are completed.
+- [x] Final deck includes AWS Console and live EKS application evidence.
+- [ ] Insert GitHub Actions and GHCR screenshots after pushing to the student's repository.

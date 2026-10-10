@@ -186,7 +186,7 @@ troubleshooting/      Intentionally broken practice manifests
 
 ## Evidence
 
-Verified screenshots live in [`evidence/screenshots`](evidence/screenshots), including the application, Compose services, Swagger API, Kubernetes-hosted application, Prometheus targets, and Grafana dashboard. The evidence inventory and the few cloud-only items still requiring AWS/GitHub access are documented in [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md).
+Verified screenshots live in [`evidence/screenshots`](evidence/screenshots), including the application, Compose services, Swagger API, Prometheus/Grafana, Terraform plan and destroy, the active AWS EKS console, Ready worker nodes, Running Helm workloads, ELB hostname, and the application served from EKS. The only remaining account-bound evidence is the GitHub Actions/GHCR run after this repository is pushed to the student's destination; see [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md).
 
 ## Live demonstration
 

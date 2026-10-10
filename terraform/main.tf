@@ -51,7 +51,10 @@ module "eks" {
 
   eks_managed_node_groups = {
     application = {
-      instance_types = ["t3.medium"]
+      # This account is enrolled in AWS's current Free Tier plan, which only
+      # permits Free Tier-eligible instance types. c7i-flex.large provides the
+      # memory needed by the application stack while satisfying that policy.
+      instance_types = ["c7i-flex.large"]
       min_size       = 2
       max_size       = 4
       desired_size   = 2

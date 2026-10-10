@@ -1,6 +1,6 @@
 # Evidence inventory
 
-These screenshots were captured from services running on the local machine on 16 October 2026.
+These screenshots were captured from verified local services and a temporary AWS EKS deployment on 16 October 2026.
 
 | File | Evidence |
 | --- | --- |
@@ -17,7 +17,12 @@ These screenshots were captured from services running on the local machine on 16
 | `terminal-prometheus-metrics.png` | Verified Prometheus text exposition from `/metrics` |
 | `terminal-trivy-clean.png` | Verified zero HIGH/CRITICAL findings for both images |
 | `terminal-git-history.png` | Twelve meaningful local commits before final evidence packaging |
+| `terminal-terraform-aws-plan.jpg` | Successful Terraform validation and non-empty 56-resource AWS plan |
+| `aws-eks-console-active.jpg` | AWS Console showing the active `deployflow-eks` cluster in Mumbai |
+| `terminal-aws-eks-deployment.jpg` | Two Ready EKS nodes, five Running application pods, Helm release, and ELB hostname |
+| `aws-eks-deployflow-app.jpg` | Populated DeployFlow dashboard served from the live EKS ingress |
+| `terminal-terraform-destroy.jpg` | Successful Terraform teardown of all 56 managed resources |
 
-Because direct automation of the macOS Terminal window is restricted, the terminal-style PNGs render the exact successful command output captured from this workspace in a dedicated local evidence page. They are not simulated cloud state. Command logs in `logs/` provide the corresponding plain-text records.
+Because direct automation of the macOS Terminal window is restricted, the terminal-style images render the exact successful command output captured from this workspace in a dedicated local evidence page. They are not simulated cloud state. The AWS Console and application images are direct browser captures from the live deployment.
 
-Cloud screenshots cannot be produced honestly until the project is pushed to the student's GitHub repository and valid AWS credentials are available.
+GitHub Actions and GHCR screenshots remain owner-dependent because no destination GitHub repository was supplied.
