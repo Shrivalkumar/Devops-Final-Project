@@ -5,7 +5,7 @@ metadata: {name: {{ include "deployflow.fullname" . }}}
 spec:
   ingressClassName: nginx
   rules:
-  - host: {{ .Values.ingress.host }}
+  - {{- if .Values.ingress.host }}host: {{ .Values.ingress.host }}{{ end }}
     http:
       paths:
       - {path: /api, pathType: Prefix, backend: {service: {name: {{ include "deployflow.fullname" . }}-backend, port: {number: 8000}}}}
