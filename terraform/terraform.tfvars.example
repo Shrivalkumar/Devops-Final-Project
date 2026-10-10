@@ -1,0 +1,4 @@
+aws_region         = "ap-south-1"
+cluster_name       = "deployflow-eks"
+environment        = "dev"
+kubernetes_version = "1.36"
