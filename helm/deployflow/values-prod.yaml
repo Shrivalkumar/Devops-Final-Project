@@ -1,0 +1,10 @@
+frontend:
+  image: ghcr.io/YOUR_ORG/deployflow-frontend
+backend:
+  image: ghcr.io/YOUR_ORG/deployflow-backend
+replicaCount: 2
+ingress:
+  enabled: true
+  host: deployflow.example.com
+hpa:
+  enabled: true

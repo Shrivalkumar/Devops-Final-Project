@@ -1,0 +1,27 @@
+frontend:
+  image: ghcr.io/YOUR_ORG/deployflow-frontend
+  tag: replace-with-git-sha
+backend:
+  image: ghcr.io/YOUR_ORG/deployflow-backend
+  tag: replace-with-git-sha
+replicaCount: 2
+imagePullSecrets: []
+postgres:
+  host: deployflow-postgres
+  database: deployflow
+  username: deployflow
+  password: change-me-before-deploy
+ingress:
+  enabled: false
+  host: deployflow.local
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 60
+resources:
+  requests: {cpu: 100m, memory: 256Mi}
+  limits: {cpu: 500m, memory: 512Mi}
+monitoring:
+  serviceMonitor:
+    enabled: true
