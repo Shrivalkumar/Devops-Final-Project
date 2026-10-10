@@ -1,0 +1,6 @@
+NAME                                   READY   STATUS    RESTARTS   AGE   IP            NODE                   NOMINATED NODE   READINESS GATES
+deployflow-backend-58f4cff9d5-5n8cb    1/1     Running   0          16m   10.244.0.25   devops-control-plane   <none>           <none>
+deployflow-backend-58f4cff9d5-xpwp5    1/1     Running   0          16m   10.244.0.26   devops-control-plane   <none>           <none>
+deployflow-frontend-785f87d9bb-44qzp   1/1     Running   0          15m   10.244.0.28   devops-control-plane   <none>           <none>
+deployflow-frontend-785f87d9bb-ftf5m   1/1     Running   0          15m   10.244.0.27   devops-control-plane   <none>           <none>
+deployflow-postgres-6df7d49567-ph6rl   1/1     Running   0          18m   10.244.0.23   devops-control-plane   <none>           <none>
