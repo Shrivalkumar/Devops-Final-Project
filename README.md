@@ -2,7 +2,11 @@
 
 DeployFlow is a release operations dashboard for tracking service versions as they move through development, staging, and production. It replaces the reference TaskBoard domain with an original application and keeps the full capstone DevOps path: test, build, scan, publish, provision, deploy, and observe.
 
-![DeployFlow dashboard](evidence/screenshots/deployflow-dashboard.jpg)
+![DeployFlow dashboard](screenshots/deployflow-dashboard.jpg)
+
+## Final presentation
+
+[Open the final DevOps capstone presentation](deliverables/DeployFlow-DevOps-Capstone.pptx)
 
 ## What the application does
 
@@ -179,14 +183,44 @@ terraform/            AWS VPC and EKS
 helm/deployflow/      Deployments, Services, Ingress, HPA, and ServiceMonitor
 k8s/                  Namespace bootstrap
 monitoring/           Prometheus/Grafana values and dashboard
-evidence/             Verified screenshots and command logs
+screenshots/           Verified browser, application, AWS, and GitHub screenshots
 docs/                 Submission checklist, AWS access guide, and presentation notes
 troubleshooting/      Intentionally broken practice manifests
 ```
 
-## Evidence
+## Screenshots
 
-Verified screenshots live in [`evidence/screenshots`](evidence/screenshots), including the application, Compose services, Swagger API, Prometheus/Grafana, Terraform plan and destroy, the active AWS EKS console, Ready worker nodes, Running Helm workloads, ELB hostname, GitHub Actions success graph, SHA-tagged GHCR package, and the application served from EKS. The delivery workflow completed successfully at [GitHub Actions run #1](https://github.com/Shrivalkumar/Devops-Final-Project/actions/runs/38908686688); see [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md).
+All verified visual proof is embedded here in the main README. The delivery workflow completed successfully at [GitHub Actions run #2](https://github.com/Shrivalkumar/Devops-Final-Project/actions/runs/38909546810).
+
+### Application and local services
+
+![DeployFlow dashboard](screenshots/deployflow-dashboard.jpg)
+
+![Create deployment](screenshots/deployflow-create-deployment.jpg)
+
+![FastAPI Swagger documentation](screenshots/deployflow-api-docs.jpg)
+
+![Docker Compose services running](screenshots/docker-compose-running.jpg)
+
+### Kubernetes and observability
+
+![DeployFlow through Kubernetes](screenshots/kubernetes-deployflow-app.jpg)
+
+![Prometheus targets up](screenshots/prometheus-targets-up.jpg)
+
+![Grafana DeployFlow dashboard](screenshots/grafana-deployflow-dashboard.jpg)
+
+### AWS deployment
+
+![Active AWS EKS cluster](screenshots/aws-eks-console-active.jpg)
+
+![DeployFlow served from EKS](screenshots/aws-eks-deployflow-app.jpg)
+
+### GitHub delivery
+
+![Successful GitHub Actions workflow](screenshots/github-actions-success.jpg)
+
+![Public SHA-tagged GHCR backend image](screenshots/github-ghcr-backend.jpg)
 
 ## Live demonstration
 
