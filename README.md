@@ -186,7 +186,7 @@ troubleshooting/      Intentionally broken practice manifests
 
 ## Evidence
 
-Verified screenshots live in [`evidence/screenshots`](evidence/screenshots), including the application, Compose services, Swagger API, Prometheus/Grafana, Terraform plan and destroy, the active AWS EKS console, Ready worker nodes, Running Helm workloads, ELB hostname, and the application served from EKS. The only remaining account-bound evidence is the GitHub Actions/GHCR run after this repository is pushed to the student's destination; see [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md).
+Verified screenshots live in [`evidence/screenshots`](evidence/screenshots), including the application, Compose services, Swagger API, Prometheus/Grafana, Terraform plan and destroy, the active AWS EKS console, Ready worker nodes, Running Helm workloads, ELB hostname, GitHub Actions success graph, SHA-tagged GHCR package, and the application served from EKS. The delivery workflow completed successfully at [GitHub Actions run #1](https://github.com/Shrivalkumar/Devops-Final-Project/actions/runs/38908686688); see [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md).
 
 ## Live demonstration
 

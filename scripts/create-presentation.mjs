@@ -182,8 +182,8 @@ async function main() {
   // 5 — Containers and CI
   {
     const s = deck.slides.add(); s.background.fill = C.bg;
-    header(s, "04 · DELIVERY", "Reproducible locally; gated in CI", "Compose proves the full stack. GitHub Actions enforces tests, builds, vulnerability policy, and immutable image tags.", 5);
-    await screenshot(s, "docker-compose-running.jpg", 64, 190, 600, 442, "Docker Desktop showing the running DeployFlow compose stack", "contain");
+    header(s, "04 · DELIVERY", "GitHub Actions completed the delivery gate", "The completed `main` workflow tested the code, built both images, scanned them, published GHCR tags, and reported deployment configuration.", 5);
+    await screenshot(s, "github-actions-success.jpg", 64, 190, 600, 442, "GitHub Actions showing successful test, build-scan-push, and deploy jobs", "contain");
     const stages = [
       ["1", "Test", "pytest · Ruff · npm build"], ["2", "Build", "backend + frontend images"], ["3", "Scan", "Trivy HIGH/CRITICAL gate"], ["4", "Publish", "GHCR · commit SHA tags"], ["5", "Deploy", "Helm when kubeconfig exists"],
     ];
@@ -195,7 +195,7 @@ async function main() {
       if (i < 4) s.shapes.add({ geometry: "rect", position: { left: 736, top: y + 47, width: 2, height: 47 }, fill: C.line, line: { style: "solid", fill: C.line, width: 0 } });
     });
     footer(s);
-    s.speakerNotes.text = ["The containers run as non-root users and expose explicit health checks.", "The Trivy action is pinned to an immutable action commit and fails on HIGH or CRITICAL findings.", "GitHub-hosted run proof requires pushing this local repository to the student's own destination repository."];
+    s.speakerNotes.text = ["This is the actual successful GitHub Actions run for the pushed main branch.", "The containers run as non-root users and expose explicit health checks.", "The Trivy action is pinned to an immutable action commit and fails on HIGH or CRITICAL findings."];
   }
 
   // 6 — Infrastructure
@@ -241,19 +241,16 @@ async function main() {
   // 9 — Readiness
   {
     const s = deck.slides.add(); s.background.fill = C.bg;
-    header(s, "08 · HANDOFF", "Submission-ready; only GitHub publishing remains", "The application, tests, containers, security gate, Terraform, AWS, Kubernetes, and observability are implemented and evidenced.", 9);
+    header(s, "08 · HANDOFF", "Submission-ready with published container evidence", "The repository, GitHub workflow, GHCR image, AWS, Kubernetes, and observability evidence are complete.", 9);
     box(s, 64, 190, 526, 407, C.panel, "rounded-2xl", C.green);
     text(s, "Verified now", 94, 220, 300, 34, 24, C.green, { bold: true });
-    const done = ["9 backend tests + Ruff", "Frontend build + npm audit", "Hardened Docker Compose stack", "Helm on kind + live EKS", "Prometheus targets + Grafana load", "Terraform plan + apply + destroy", "AWS Console + live app evidence"];
+    const done = ["9 backend tests + Ruff", "Frontend build + npm audit", "Hardened Docker Compose stack", "GitHub Actions: all jobs successful", "Public GHCR SHA-tagged image", "Helm on kind + live EKS", "Prometheus, Grafana, AWS evidence"];
     done.forEach((v,i) => { text(s, "✓", 96, 278 + i*42, 24, 22, 15, C.green, { bold: true }); text(s, v, 130, 278 + i*42, 395, 24, 14, C.ink); });
-    box(s, 626, 190, 590, 407, C.panel, "rounded-2xl", C.amber);
-    text(s, "Final owner action", 656, 220, 420, 34, 24, C.amber, { bold: true });
-    bullet(s, "Push to your GitHub repository", "This unlocks commit-history, Actions-run, and GHCR screenshot evidence under your identity.", 658, 290, 505, C.amber);
-    bullet(s, "Run the final CI demonstration", "Commit one visible change, follow the green workflow, then show the SHA-tagged GHCR packages.", 658, 405, 505, C.amber);
+    await screenshot(s, "github-ghcr-backend.jpg", 626, 190, 590, 407, "Public GitHub Container Registry backend image with immutable commit SHA tag", "contain");
     text(s, "Recommended demo path", 66, 630, 210, 22, 13, C.cyan, { bold: true });
     text(s, "Create release → update status → call API → generate load → watch Grafana", 280, 628, 810, 26, 16, C.ink, { bold: true });
-    footer(s, "DEPLOYFLOW · AWS VERIFIED · READY TO PUBLISH");
-    s.speakerNotes.text = ["Close with the live demo path.", "AWS plan, apply, EKS runtime, and destroy are already evidenced; the only account-bound step left is publishing to the student's GitHub repository."];
+    footer(s, "DEPLOYFLOW · AWS VERIFIED · GHCR PUBLISHED");
+    s.speakerNotes.text = ["Close with the live demo path.", "The GHCR backend package shown here is public and tagged with the immutable workflow commit SHA.", "AWS plan, apply, EKS runtime, and destroy are also evidenced."];
   }
 
   for (const [i, slide] of deck.slides.items.entries()) {

@@ -1,6 +1,6 @@
 # DeployFlow submission checklist
 
-Status on 16 October 2026. Items marked **verified** were executed on this machine. Only GitHub publishing remains pending because no destination repository was supplied.
+Status on 16 October 2026. Items marked **verified** were executed on this machine or in the destination GitHub repository.
 
 ## Application and testing
 
@@ -23,8 +23,9 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] Compose build/runtime and clean local Trivy command screenshots captured.
 - [x] Workflow tests code, builds both images, scans both images, pushes SHA tags, and deploys with Helm.
 - [x] Trivy action pinned to a verified immutable commit and configured to fail on HIGH/CRITICAL findings.
-- [ ] Push the prepared history to a student-owned public GitHub repository.
-- [ ] Capture the successful GitHub Actions URL and GHCR package page after the first push to `main`.
+- [x] **Verified:** pushed the completed history to [`Shrivalkumar/Devops-Final-Project`](https://github.com/Shrivalkumar/Devops-Final-Project) on `main`.
+- [x] **Verified:** [GitHub Actions run #1](https://github.com/Shrivalkumar/Devops-Final-Project/actions/runs/38908686688) succeeded: test, build/scan/push, and deploy-report jobs all passed.
+- [x] **Verified:** public GHCR backend image published with immutable tag `860e1d5dad6b062f1ec4dcc93ace2b38712702c2`; Actions and GHCR screenshots captured.
 
 ## Terraform and AWS
 
@@ -57,4 +58,4 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] Presentation notes include a timed demonstration sequence.
 - [x] Final slide deck includes genuine screenshots from this run.
 - [x] Final deck includes AWS Console and live EKS application evidence.
-- [ ] Insert GitHub Actions and GHCR screenshots after pushing to the student's repository.
+- [x] Final deck includes GitHub Actions and GHCR screenshots from the completed `main` workflow.
