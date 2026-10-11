@@ -145,6 +145,12 @@ Do not commit AWS access keys, kubeconfig files, state files, or real passwords.
 
 The exact credential options, IAM capabilities, quotas, installed tool versions, and safe evidence sequence are documented in [`docs/AWS_ACCESS_REQUIREMENTS.md`](docs/AWS_ACCESS_REQUIREMENTS.md). After CI publishes the SHA-tagged images, `scripts/deploy-eks.sh` installs the NGINX ingress controller and DeployFlow release on the provisioned EKS cluster.
 
+### Verified AWS CLI access
+
+The following read-only terminal run confirms the configured AWS identity and queries the EKS inventory in `ap-south-1`. The empty list is intentional evidence that this check did **not** create chargeable AWS infrastructure.
+
+![AWS CLI identity and EKS inventory](screenshots/terminal-aws-cli-real.jpg)
+
 ## Kubernetes and Helm
 
 ```bash
@@ -170,6 +176,12 @@ helm list -n deployflow
 ```
 
 The default chart runs two backend replicas and two frontend replicas. Both application Services use `ClusterIP`; the Ingress sends `/api` to FastAPI and `/` to Nginx. Liveness and readiness probes protect rollout health. Container security contexts drop Linux capabilities and prevent privilege escalation.
+
+### Verified local Kubernetes release
+
+The chart was deployed to the local `kind-helm-lab` cluster with `kubectl` and Helm. The terminal evidence shows both backend replicas, both frontend replicas, and PostgreSQL running, along with the three ClusterIP Services and Helm release. The chart explicitly uses `imagePullPolicy: IfNotPresent`, allowing locally loaded development images to run without a registry pull.
+
+![Local Kubernetes pods, services, and Helm release](screenshots/terminal-kubernetes-local-real.jpg)
 
 ### Verified Terraform and Helm validation
 
