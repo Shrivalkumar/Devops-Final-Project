@@ -6,6 +6,7 @@ backend:
   tag: replace-with-git-sha
 replicaCount: 2
 imagePullSecrets: []
+imagePullPolicy: IfNotPresent
 postgres:
   host: deployflow-postgres
   database: deployflow
