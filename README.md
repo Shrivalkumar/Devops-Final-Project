@@ -8,6 +8,8 @@ DeployFlow is a release operations dashboard for tracking service versions as th
 
 [Open the final DevOps capstone presentation](deliverables/DeployFlow-DevOps-Capstone.pptx)
 
+[Watch the recorded presentation on Google Drive](https://drive.google.com/file/d/1oB1hstz5JK3EJspoK-SwsWqhjNTNv2a6/view?usp=sharin)
+
 ## What the application does
 
 Release operators can create a deployment record, review its owner and risk, filter the release queue, and move a deployment through planned, running, and succeeded states. The React frontend calls a FastAPI REST API. PostgreSQL stores deployment records, and Alembic owns the database schema.
