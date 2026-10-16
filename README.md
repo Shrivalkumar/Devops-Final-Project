@@ -127,6 +127,8 @@ terraform destroy
 
 Do not commit AWS access keys, kubeconfig files, state files, or real passwords. The repository ignores all Terraform state and plan artifacts.
 
+The exact credential options, IAM capabilities, quotas, installed tool versions, and safe evidence sequence are documented in [`docs/AWS_ACCESS_REQUIREMENTS.md`](docs/AWS_ACCESS_REQUIREMENTS.md). After CI publishes the SHA-tagged images, `scripts/deploy-eks.sh` installs the NGINX ingress controller and DeployFlow release on the provisioned EKS cluster.
+
 ## Kubernetes and Helm
 
 ```bash
@@ -178,7 +180,7 @@ helm/deployflow/      Deployments, Services, Ingress, HPA, and ServiceMonitor
 k8s/                  Namespace bootstrap
 monitoring/           Prometheus/Grafana values and dashboard
 evidence/             Verified screenshots and command logs
-docs/                 Submission checklist and presentation notes
+docs/                 Submission checklist, AWS access guide, and presentation notes
 troubleshooting/      Intentionally broken practice manifests
 ```
 
