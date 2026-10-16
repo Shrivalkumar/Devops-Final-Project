@@ -77,6 +77,12 @@ Open:
 
 Stop the stack with `docker compose down`. Add `-v` only when you intentionally want to delete the local database volume.
 
+### Verified local Docker Compose run
+
+This terminal capture shows the actual image build, healthy PostgreSQL and backend containers, started frontend container, and `docker compose ps` output from this checkout.
+
+![Docker Compose build and running services](screenshots/terminal-docker-real.jpg)
+
 ## Test and check code quality
 
 ```bash
@@ -89,6 +95,12 @@ ruff check app tests
 ```
 
 The suite contains nine tests across health, readiness, create, list, read, update, delete, validation, statistics, and metrics behavior. Tests override the application dependency with an isolated in-memory SQLite database; they never use the PostgreSQL instance from Compose or Kubernetes.
+
+### Verified test and lint run
+
+The backend test suite and Ruff check were run in the project terminal.
+
+![Pytest and Ruff passing in the project terminal](screenshots/terminal-tests-real.jpg)
 
 ## CI/CD and security
 
@@ -158,6 +170,12 @@ helm list -n deployflow
 ```
 
 The default chart runs two backend replicas and two frontend replicas. Both application Services use `ClusterIP`; the Ingress sends `/api` to FastAPI and `/` to Nginx. Liveness and readiness probes protect rollout health. Container security contexts drop Linux capabilities and prevent privilege escalation.
+
+### Verified Terraform and Helm validation
+
+This local validation run confirms Terraform formatting/configuration plus Helm linting and manifest rendering. It does not represent an AWS apply or a live Kubernetes deployment.
+
+![Terraform and Helm validation in the project terminal](screenshots/terminal-infra-real.jpg)
 
 ## Prometheus and Grafana
 
