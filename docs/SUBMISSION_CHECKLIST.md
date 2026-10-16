@@ -11,7 +11,7 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] Responsive React interface calls the API.
 - [x] **Verified:** nine Pytest cases pass with an isolated in-memory database.
 - [x] **Verified:** Ruff reports no violations.
-- [x] Application and Swagger screenshots captured.
+- [x] Application, Swagger, and passing-test command screenshots captured.
 
 ## Git, Docker, and CI/CD
 
@@ -20,6 +20,7 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] Backend and frontend Dockerfiles build.
 - [x] Both application images run as non-root users.
 - [x] **Verified:** Compose starts PostgreSQL, backend, and frontend; all three are healthy/running.
+- [x] Compose build/runtime and clean local Trivy command screenshots captured.
 - [x] Workflow tests code, builds both images, scans both images, pushes SHA tags, and deploys with Helm.
 - [x] Trivy action pinned to a verified immutable commit and configured to fail on HIGH/CRITICAL findings.
 - [ ] Push the prepared history to a student-owned public GitHub repository.
@@ -46,6 +47,7 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] **Verified locally on kind:** Prometheus discovers both backend pods; both targets are `UP`.
 - [x] **Verified locally on kind:** Grafana dashboard shows live endpoint traffic and request totals.
 - [x] Kubernetes application, Prometheus, and Grafana screenshots captured.
+- [x] Kubernetes pods/Services/Helm and `/metrics` command screenshots captured.
 
 ## Presentation
 
