@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: deployflow-grafana-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  deployflow.json: |-
+    {
+      "annotations": {"list": []},
+      "editable": true,
+      "graphTooltip": 1,
+      "id": null,
+      "panels": [
+        {
+          "datasource": {"type": "prometheus", "uid": "prometheus"},
+          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "unit": "reqps"}, "overrides": []},
+          "gridPos": {"h": 9, "w": 16, "x": 0, "y": 0},
+          "id": 1,
+          "options": {"legend": {"displayMode": "table", "placement": "bottom", "showLegend": true}, "tooltip": {"mode": "multi", "sort": "desc"}},
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "sum by (handler, method) (rate(http_requests_total{job=\"deployflow-backend\"}[1m]))",
+              "legendFormat": "{{method}} {{handler}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "DeployFlow HTTP request rate",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "prometheus"},
+          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}}, "overrides": []},
+          "gridPos": {"h": 9, "w": 8, "x": 16, "y": 0},
+          "id": 2,
+          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "sum(increase(http_requests_total{job=\"deployflow-backend\"}[15m]))",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Requests in the last 15 minutes",
+          "type": "stat"
+        }
+      ],
+      "refresh": "5s",
+      "schemaVersion": 40,
+      "tags": ["deployflow", "capstone"],
+      "templating": {"list": []},
+      "time": {"from": "now-15m", "to": "now"},
+      "timezone": "browser",
+      "title": "DeployFlow application metrics",
+      "uid": "deployflow-metrics",
+      "version": 1
+    }
