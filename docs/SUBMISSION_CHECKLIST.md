@@ -11,7 +11,7 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] Responsive React interface calls the API.
 - [x] **Verified:** nine Pytest cases pass with an isolated in-memory database.
 - [x] **Verified:** Ruff reports no violations.
-- [x] Application, Swagger, and passing-test command screenshots captured.
+- [x] Application and Swagger screenshots are embedded in the root `README.md`.
 
 ## Git, Docker, and CI/CD
 
@@ -20,7 +20,7 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] Backend and frontend Dockerfiles build.
 - [x] Both application images run as non-root users.
 - [x] **Verified:** Compose starts PostgreSQL, backend, and frontend; all three are healthy/running.
-- [x] Compose build/runtime and clean local Trivy command screenshots captured.
+- [x] Compose runtime screenshot is embedded in the root `README.md`.
 - [x] Workflow tests code, builds both images, scans both images, pushes SHA tags, and deploys with Helm.
 - [x] Trivy action pinned to a verified immutable commit and configured to fail on HIGH/CRITICAL findings.
 - [x] **Verified:** pushed the completed history to [`Shrivalkumar/Devops-Final-Project`](https://github.com/Shrivalkumar/Devops-Final-Project) on `main`.
@@ -36,7 +36,7 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] **Verified:** Terraform produced a non-empty plan: 56 resources to add.
 - [x] **Verified:** Terraform applied the two-AZ VPC and active EKS 1.36 cluster in `ap-south-1`.
 - [x] **Verified:** two managed workers became Ready and the Helm release ran with two frontend and two backend replicas.
-- [x] AWS Console, EKS command output, ELB, and live application screenshots captured.
+- [x] AWS Console and live EKS application screenshots are embedded in the root `README.md`.
 - [x] **Verified:** Helm releases, load balancer, ECR repositories, and all Terraform-managed resources were destroyed after evidence capture.
 
 ## Kubernetes, Helm, and observability
@@ -49,8 +49,7 @@ Status on 16 October 2026. Items marked **verified** were executed on this machi
 - [x] **Verified locally on kind:** application works through the Kubernetes frontend Service.
 - [x] **Verified locally on kind:** Prometheus discovers both backend pods; both targets are `UP`.
 - [x] **Verified locally on kind:** Grafana dashboard shows live endpoint traffic and request totals.
-- [x] Kubernetes application, Prometheus, and Grafana screenshots captured.
-- [x] Kubernetes pods/Services/Helm and `/metrics` command screenshots captured.
+- [x] Kubernetes application, Prometheus, and Grafana screenshots are embedded in the root `README.md`.
 
 ## Presentation
 

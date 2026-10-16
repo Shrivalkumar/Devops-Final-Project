@@ -1,4 +1,0 @@
-NAME                              IMAGE                           COMMAND                  SERVICE    CREATED          STATUS                    PORTS
-devops-final-project-backend-1    devops-final-project-backend    "sh -c 'alembic upgr…"   backend    22 minutes ago   Up 21 minutes (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
-devops-final-project-frontend-1   devops-final-project-frontend   "/docker-entrypoint.…"   frontend   22 minutes ago   Up 21 minutes             0.0.0.0:3000->8080/tcp, [::]:3000->8080/tcp
-devops-final-project-postgres-1   postgres:16-alpine              "docker-entrypoint.s…"   postgres   23 minutes ago   Up 23 minutes (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp

@@ -5,7 +5,7 @@ import { Presentation, PresentationFile } from "/Users/shrivalkumar/.cache/codex
 
 const ROOT = "/Users/shrivalkumar/Desktop/Devops-Final-Project";
 const OUT = path.join(ROOT, "deliverables");
-const SHOTS = path.join(ROOT, "evidence", "screenshots");
+const SHOTS = path.join(ROOT, "screenshots");
 const SKILL_DIR = "/Users/shrivalkumar/.codex/plugins/cache/openai-primary-runtime/presentations/26.1013.11914/skills/presentations";
 const RUNTIME_PYTHON = "/Users/shrivalkumar/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3";
 const W = 1280;
