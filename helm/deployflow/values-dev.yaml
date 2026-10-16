@@ -1,0 +1,6 @@
+replicaCount: 2
+ingress:
+  enabled: true
+  host: deployflow.local
+hpa:
+  enabled: false

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "deployflow.fullname" . }}-backend
+  labels: {app: deployflow-backend}
+spec:
+  type: ClusterIP
+  selector: {app: deployflow-backend}
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: http
