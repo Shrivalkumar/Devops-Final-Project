@@ -11,6 +11,9 @@ postgres:
   database: deployflow
   username: deployflow
   password: change-me-before-deploy
+  persistence:
+    enabled: true
+    size: 5Gi
 ingress:
   enabled: false
   host: deployflow.local

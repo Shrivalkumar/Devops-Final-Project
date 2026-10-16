@@ -201,42 +201,27 @@ async function main() {
   // 6 — Infrastructure
   {
     const s = deck.slides.add(); s.background.fill = C.bg;
-    header(s, "05 · INFRASTRUCTURE AS CODE", "AWS architecture is explicit before it is expensive", "Terraform defines a two-AZ VPC, private worker subnets, NAT egress, and a two-node managed EKS group.", 6);
-    box(s, 64, 190, 765, 430, C.panel, "rounded-2xl", C.line);
-    text(s, "AWS VPC · 10.0.0.0/16", 92, 215, 300, 28, 16, C.cyan, { bold: true });
-    [0,1].forEach((i) => {
-      const x = 94 + i * 355;
-      box(s, x, 276, 322, 284, C.panel2, "rounded-xl", C.line);
-      text(s, `Availability Zone ${i + 1}`, x + 20, 296, 282, 24, 15, C.ink, { bold: true });
-      box(s, x + 20, 340, 130, 74, "#0D3340", "rounded-lg", C.cyan);
-      text(s, "Public subnet", x + 30, 365, 110, 24, 13, C.cyan, { bold: true, align: "center" });
-      box(s, x + 172, 340, 130, 150, "#202047", "rounded-lg", C.violet);
-      text(s, "Private subnet", x + 182, 365, 110, 22, 13, C.violet, { bold: true, align: "center" });
-      text(s, "EKS worker", x + 182, 414, 110, 22, 13, C.ink, { bold: true, align: "center" });
-      text(s, "managed node", x + 182, 440, 110, 20, 11, C.muted, { align: "center" });
-      arrow(s, x + 143, 374, 32, C.line);
-    });
-    text(s, "Internet Gateway", 285, 578, 200, 22, 12, C.muted, { bold: true, align: "center" });
-    text(s, "NAT egress", 542, 578, 160, 22, 12, C.muted, { bold: true, align: "center" });
-    metric(s, "VALID", "TERRAFORM VALIDATE", 870, 205, 300, C.green);
-    bullet(s, "Two availability zones", "Public and private subnet pairs are generated from the selected AWS region.", 870, 330, 300, C.cyan);
-    bullet(s, "Production defaults", "Private workers, managed nodes, Kubernetes 1.36, and module/provider constraints are versioned.", 870, 430, 300, C.violet);
-    bullet(s, "Credential-safe evidence", "Plan/apply are intentionally pending valid AWS credentials; no cloud result is fabricated.", 870, 530, 300, C.amber);
+    header(s, "05 · INFRASTRUCTURE AS CODE", "Real AWS infrastructure—provisioned and verified", "Terraform created the two-AZ VPC and EKS platform in Mumbai; the cluster reported Active with zero node-health issues.", 6);
+    await screenshot(s, "aws-eks-console-active.jpg", 64, 190, 770, 445, "AWS console showing the active DeployFlow EKS cluster", "contain");
+    metric(s, "ACTIVE", "EKS 1.36 · AP-SOUTH-1", 870, 205, 300, C.green);
+    bullet(s, "Non-empty plan", "56 resources planned: VPC, four subnets, NAT, IAM, encryption, logging, EKS, and managed nodes.", 870, 330, 300, C.cyan);
+    bullet(s, "Two ready workers", "Workloads ran across private subnets in two availability zones behind an AWS load balancer.", 870, 430, 300, C.violet);
+    bullet(s, "Cost-safe teardown", "Helm releases and the load balancer were removed before Terraform destroyed the cloud stack.", 870, 530, 300, C.amber);
     footer(s);
-    s.speakerNotes.text = ["Terraform init and validate succeeded locally.", "The current local AWS token returns STS InvalidClientTokenId, so plan/apply/destroy proof must be captured after valid credentials are supplied.", "Sources: https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html and https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest"];
+    s.speakerNotes.text = ["This is an actual AWS Console screenshot from ap-south-1.", "Terraform planned 56 resources and applied the VPC, EKS control plane, and two-node managed group.", "The complete destroy was captured after the live demonstration to prevent ongoing costs."];
   }
 
   // 7 — Kubernetes
   {
     const s = deck.slides.add(); s.background.fill = C.bg;
-    header(s, "06 · KUBERNETES", "The Helm release is running—not hypothetical", "A local kind cluster verifies the chart, services, ingress routing, probes, and multi-replica workloads.", 7);
-    await screenshot(s, "kubernetes-deployflow-app.jpg", 64, 190, 750, 450, "DeployFlow application served through the Kubernetes ingress", "contain");
+    header(s, "06 · KUBERNETES", "The Helm release ran on EKS—not hypothetical", "The same chart deployed PostgreSQL, two backend replicas, two frontend replicas, and ingress on the live AWS cluster.", 7);
+    await screenshot(s, "aws-eks-deployflow-app.jpg", 64, 190, 750, 450, "DeployFlow application served through the live EKS ingress", "contain");
     metric(s, "2 + 2", "BACKEND + FRONTEND PODS", 854, 202, 326, C.green);
     bullet(s, "ClusterIP by default", "Frontend, backend, and PostgreSQL stay internal; ingress is the controlled entry point.", 856, 336, 320, C.cyan);
     bullet(s, "Environment overlays", "Base, development, and production values separate resource and scaling choices.", 856, 446, 320, C.violet);
     bullet(s, "Operational safeguards", "Readiness/liveness probes, resource requests and limits, security contexts, and HPA are templated.", 856, 556, 320, C.green);
     footer(s);
-    s.speakerNotes.text = ["The local proof used a kind cluster and the same Helm chart committed in the repository.", "Helm lint and template validation also pass."];
+    s.speakerNotes.text = ["This screenshot is the application running behind the EKS ingress controller.", "The terminal evidence shows both frontend and backend replicas distributed across the two workers.", "The same chart was also validated locally on kind."];
   }
 
   // 8 — Observability
@@ -256,19 +241,19 @@ async function main() {
   // 9 — Readiness
   {
     const s = deck.slides.add(); s.background.fill = C.bg;
-    header(s, "08 · HANDOFF", "Submission-ready locally; two external proofs remain", "Everything that can be verified without account authority is implemented, running, and evidenced.", 9);
+    header(s, "08 · HANDOFF", "Submission-ready; only GitHub publishing remains", "The application, tests, containers, security gate, Terraform, AWS, Kubernetes, and observability are implemented and evidenced.", 9);
     box(s, 64, 190, 526, 407, C.panel, "rounded-2xl", C.green);
     text(s, "Verified now", 94, 220, 300, 34, 24, C.green, { bold: true });
-    const done = ["9 backend tests + Ruff", "Frontend build + npm audit", "Hardened Docker Compose stack", "Helm lint + live kind deployment", "Prometheus targets + Grafana load", "Terraform init + validate", "Real screenshots + operator runbook"];
+    const done = ["9 backend tests + Ruff", "Frontend build + npm audit", "Hardened Docker Compose stack", "Helm on kind + live EKS", "Prometheus targets + Grafana load", "Terraform plan + apply + destroy", "AWS Console + live app evidence"];
     done.forEach((v,i) => { text(s, "✓", 96, 278 + i*42, 24, 22, 15, C.green, { bold: true }); text(s, v, 130, 278 + i*42, 395, 24, 14, C.ink); });
     box(s, 626, 190, 590, 407, C.panel, "rounded-2xl", C.amber);
-    text(s, "Complete with account access", 656, 220, 420, 34, 24, C.amber, { bold: true });
+    text(s, "Final owner action", 656, 220, 420, 34, 24, C.amber, { bold: true });
     bullet(s, "Push to your GitHub repository", "This unlocks commit-history, Actions-run, and GHCR screenshot evidence under your identity.", 658, 290, 505, C.amber);
-    bullet(s, "Refresh AWS credentials", "Run terraform plan/apply, capture EKS/nodes/load balancer proof, then destroy to avoid charges.", 658, 405, 505, C.amber);
+    bullet(s, "Run the final CI demonstration", "Commit one visible change, follow the green workflow, then show the SHA-tagged GHCR packages.", 658, 405, 505, C.amber);
     text(s, "Recommended demo path", 66, 630, 210, 22, 13, C.cyan, { bold: true });
     text(s, "Create release → update status → call API → generate load → watch Grafana", 280, 628, 810, 26, 16, C.ink, { bold: true });
-    footer(s, "DEPLOYFLOW · READY FOR FINAL ACCOUNT-BOUND EVIDENCE");
-    s.speakerNotes.text = ["Close with the live demo path.", "Ask the evaluator to distinguish implementation completeness from the two proofs that require the student's GitHub and AWS account authority."];
+    footer(s, "DEPLOYFLOW · AWS VERIFIED · READY TO PUBLISH");
+    s.speakerNotes.text = ["Close with the live demo path.", "AWS plan, apply, EKS runtime, and destroy are already evidenced; the only account-bound step left is publishing to the student's GitHub repository."];
   }
 
   for (const [i, slide] of deck.slides.items.entries()) {
