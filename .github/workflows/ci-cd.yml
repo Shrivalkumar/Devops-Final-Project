@@ -1,0 +1,103 @@
+name: DeployFlow CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+
+concurrency:
+  group: deployflow-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install backend dependencies
+        run: pip install -r requirements.txt
+        working-directory: backend
+      - name: Run backend tests
+        run: pytest -v
+        working-directory: backend
+      - name: Check Python code quality
+        run: ruff check app tests
+        working-directory: backend
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Build frontend
+        run: npm ci && npm run build
+        working-directory: frontend
+
+  build-scan-push:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions: {contents: read, packages: write}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set lowercase image prefix
+        run: echo "IMAGE_PREFIX=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/deployflow" >> "$GITHUB_ENV"
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build images
+        run: |
+          docker build -t "$IMAGE_PREFIX-backend:${{ github.sha }}" ./backend
+          docker build -t "$IMAGE_PREFIX-frontend:${{ github.sha }}" ./frontend
+      - name: Scan backend
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE_PREFIX }}-backend:${{ github.sha }}
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+      - name: Scan frontend
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE_PREFIX }}-frontend:${{ github.sha }}
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+      - name: Push images
+        run: |
+          docker push "$IMAGE_PREFIX-backend:${{ github.sha }}"
+          docker push "$IMAGE_PREFIX-frontend:${{ github.sha }}"
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build-scan-push
+    runs-on: ubuntu-latest
+    permissions: {contents: read, packages: read}
+    env:
+      KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+      - name: Report deployment configuration
+        if: env.KUBE_CONFIG_DATA == ''
+        run: echo "KUBE_CONFIG_DATA is not configured; build, scan and publish completed without cluster deployment."
+      - name: Configure kubectl
+        if: env.KUBE_CONFIG_DATA != ''
+        run: |
+          mkdir -p ~/.kube
+          echo "$KUBE_CONFIG_DATA" | base64 -d > ~/.kube/config
+      - name: Deploy with Helm
+        if: env.KUBE_CONFIG_DATA != ''
+        run: |
+          IMAGE_PREFIX="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/deployflow"
+          helm upgrade --install deployflow ./helm/deployflow -n deployflow --create-namespace \
+            --set backend.tag=${{ github.sha }} \
+            --set frontend.tag=${{ github.sha }} \
+            --set backend.image="$IMAGE_PREFIX-backend" \
+            --set frontend.image="$IMAGE_PREFIX-frontend" \
+            --set-string postgres.password="$POSTGRES_PASSWORD" \
+            --wait --timeout 10m
