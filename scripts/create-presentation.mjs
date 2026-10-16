@@ -1,10 +1,13 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { Presentation, PresentationFile } from "/Users/shrivalkumar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/@oai/artifact-tool/dist/artifact_tool.mjs";
 
 const ROOT = "/Users/shrivalkumar/Desktop/Devops-Final-Project";
 const OUT = path.join(ROOT, "deliverables");
 const SHOTS = path.join(ROOT, "evidence", "screenshots");
+const SKILL_DIR = "/Users/shrivalkumar/.codex/plugins/cache/openai-primary-runtime/presentations/26.1013.11914/skills/presentations";
+const RUNTIME_PYTHON = "/Users/shrivalkumar/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3";
 const W = 1280;
 const H = 720;
 const C = {
@@ -274,8 +277,28 @@ async function main() {
   }
   const montage = await deck.export({ format: "webp", montage: true });
   await fs.writeFile(path.join(OUT, "DeployFlow-DevOps-Capstone-montage.webp"), new Uint8Array(await montage.arrayBuffer()));
+  const stagingDir = path.join(ROOT, ".codex-finalizer");
+  const candidatePath = path.join(stagingDir, "DeployFlow-DevOps-Capstone-candidate.pptx");
+  const finalPath = path.join(OUT, "DeployFlow-DevOps-Capstone.pptx");
+  await fs.mkdir(stagingDir, { recursive: true });
   const pptx = await PresentationFile.exportPptx(deck);
-  await pptx.save(path.join(OUT, "DeployFlow-DevOps-Capstone.pptx"));
+  await pptx.save(candidatePath);
+  const { finalizePresentation } = await import(pathToFileURL(path.join(SKILL_DIR, "container_tools/artifact_tool_utils.mjs")).href);
+  await finalizePresentation({
+    explicitTotalSlideCount: 9,
+    requiredNativeTableOwnerSlides: [],
+    requiredNativeChartOwnerSlides: [],
+    workspaceDir: ROOT,
+    candidatePath,
+    finalPath,
+    pythonExecutable: RUNTIME_PYTHON,
+    integrityValidatorPath: path.join(SKILL_DIR, "container_tools/inspect_presentation_package_integrity.py"),
+    layoutValidatorPath: path.join(SKILL_DIR, "container_tools/inspect_presentation_layout_geometry.py"),
+    layoutArgs: ["--expected-slide-size-emu", "12192000,6858000", "--validate-bullet-geometry", "--validate-heading-fit"],
+    fontPolicy: { basis: "design", families: ["Aptos"] },
+    verifyArtifactToolImport: true,
+    receiptPath: path.join(stagingDir, "DeployFlow-DevOps-Capstone.validation.json"),
+  });
 }
 
 main().catch((error) => { console.error(error); process.exitCode = 1; });
