@@ -1,0 +1,7 @@
+NAME                          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/deployflow-backend    ClusterIP   10.96.56.44     <none>        8000/TCP   18m
+service/deployflow-frontend   ClusterIP   10.96.192.61    <none>        80/TCP     18m
+service/deployflow-postgres   ClusterIP   10.96.220.238   <none>        5432/TCP   18m
+
+NAME                                   CLASS   HOSTS              ADDRESS   PORTS   AGE
+ingress.networking.k8s.io/deployflow   nginx   deployflow.local             80      18m
