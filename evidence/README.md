@@ -1,6 +1,6 @@
 # Evidence inventory
 
-These screenshots were captured from verified local services and a temporary AWS EKS deployment on 16 October 2026.
+These screenshots were captured from verified local services, a temporary AWS EKS deployment, and the destination GitHub repository on 16 October 2026.
 
 | File | Evidence |
 | --- | --- |
@@ -22,7 +22,9 @@ These screenshots were captured from verified local services and a temporary AWS
 | `terminal-aws-eks-deployment.jpg` | Two Ready EKS nodes, five Running application pods, Helm release, and ELB hostname |
 | `aws-eks-deployflow-app.jpg` | Populated DeployFlow dashboard served from the live EKS ingress |
 | `terminal-terraform-destroy.jpg` | Successful Terraform teardown of all 56 managed resources |
+| `github-actions-success.jpg` | Successful GitHub Actions run with test, build-scan-push, and deploy jobs |
+| `github-ghcr-backend.jpg` | Public GHCR backend container package tagged with the immutable workflow commit SHA |
 
 Because direct automation of the macOS Terminal window is restricted, the terminal-style images render the exact successful command output captured from this workspace in a dedicated local evidence page. They are not simulated cloud state. The AWS Console and application images are direct browser captures from the live deployment.
 
-GitHub Actions and GHCR screenshots remain owner-dependent because no destination GitHub repository was supplied.
+`github-actions-success.jpg` captures the completed GitHub Actions run: test, build-scan-push, and deploy jobs passed. `github-ghcr-backend.jpg` captures the public backend package with its immutable commit-SHA tag. The workflow run is available at <https://github.com/Shrivalkumar/Devops-Final-Project/actions/runs/38908686688>.
