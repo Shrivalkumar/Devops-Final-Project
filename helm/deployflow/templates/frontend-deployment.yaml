@@ -15,6 +15,7 @@ spec:
       containers:
       - name: frontend
         image: "{{ .Values.frontend.image }}:{{ .Values.frontend.tag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
         ports: [{containerPort: 8080}]
         securityContext: {allowPrivilegeEscalation: false, capabilities: {drop: ["ALL"]}}
         readinessProbe: {httpGet: {path: /, port: 8080}, initialDelaySeconds: 5}
